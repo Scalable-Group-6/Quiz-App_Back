@@ -39,7 +39,7 @@ __decorate([
     __metadata("design:returntype", String)
 ], GradingController.prototype, "getHello", null);
 exports.GradingController = GradingController = __decorate([
-    (0, common_1.Controller)(),
+    (0, common_1.Controller)('grading'),
     __metadata("design:paramtypes", [typeof (_a = typeof grading_service_1.GradingService !== "undefined" && grading_service_1.GradingService) === "function" ? _a : Object])
 ], GradingController);
 

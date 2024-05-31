@@ -1,0 +1,53 @@
+services:
+  quiz:
+    build:
+      context: .
+      dockerfile: ./apps/quiz/Dockerfile
+      target: development
+    command: npm run start:dev quiz
+    env_file:
+      - ./apps/quiz/.env
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+
+
+
+  mongodb:
+    image: mongo:5
+    command: --replSet rs0
+    ports:
+      - '28017:27017'
+    environment:
+      - MONGO_INITDB_DATABASE=attachment-api-local-dev
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb
+    healthcheck:
+      # use 'mongo' instead of 'mongosh' if MongoDB version is lower than 5
+      test: mongosh --eval 'db.runCommand("ping").ok' localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  mongo-init:
+    image: mongo:5
+    restart: 'no'
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    command: >
+      mongo --host mongodb:27017 --eval
+      '
+      rs.initiate( {
+         _id : "rs0",
+         members: [
+            { _id: 0, host: "localhost:27017" }
+         ]
+      })
+      '
+volumes:
+  mongodb_master_data:
+    driver: local

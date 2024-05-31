@@ -1,8 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { QuizModule } from './quiz.module';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(QuizModule);
-  await app.listen(3000);
+
+
+  app.useGlobalPipes(new ValidationPipe())
+
+  const configService = app.get(ConfigService);
+  await app.listen(configService.get('PORT'));
+  // await app.listen(3000);
 }
 bootstrap();

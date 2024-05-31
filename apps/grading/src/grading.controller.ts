@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { GradingService } from './grading.service';
 
-@Controller()
+@Controller('grading')
 export class GradingController {
   constructor(private readonly gradingService: GradingService) {}
 
