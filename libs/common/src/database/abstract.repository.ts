@@ -40,6 +40,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
     return document as any;
   }
+  
 
   async findOneAndUpdate(
     filterQuery: FilterQuery<TDocument>,
@@ -71,6 +72,18 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async find(filterQuery: FilterQuery<TDocument>) {
     return this.model.find(filterQuery, {}, { lean: true });
+  }
+  async deleteById(id: string): Promise<boolean> {
+    const result = await this.model.deleteOne({ _id: id }).exec();
+    if (result.deletedCount === 0) {
+      this.logger.warn(`Document not found with id:`, id);
+      throw new NotFoundException('Document not found.');
+    }
+    return true;
+  }
+
+  async deleteAll() {
+    return this.model.deleteMany({}).exec();
   }
 
   async startTransaction() {

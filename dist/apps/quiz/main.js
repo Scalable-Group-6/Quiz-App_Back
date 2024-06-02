@@ -2,9 +2,87 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./apps/quiz/src/dto/create-quiz.request.ts":
+/***/ "./apps/quiz/src/dto/create-quiz.dto.ts":
+/*!**********************************************!*\
+  !*** ./apps/quiz/src/dto/create-quiz.dto.ts ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var _a, _b;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CreateQuizDto = void 0;
+const class_transformer_1 = __webpack_require__(/*! class-transformer */ "class-transformer");
+const class_validator_1 = __webpack_require__(/*! class-validator */ "class-validator");
+class QuestionDto {
+}
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "type", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "question", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], QuestionDto.prototype, "options", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "answer", void 0);
+class CreateQuizDto {
+}
+exports.CreateQuizDto = CreateQuizDto;
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateQuizDto.prototype, "subject", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateQuizDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Number)
+], CreateQuizDto.prototype, "duration", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateQuizDto.prototype, "creator_id", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+], CreateQuizDto.prototype, "start_time", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+], CreateQuizDto.prototype, "end_time", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ValidateNested)({ each: true }),
+    (0, class_transformer_1.Type)(() => QuestionDto),
+    __metadata("design:type", Array)
+], CreateQuizDto.prototype, "questions", void 0);
+
+
+/***/ }),
+
+/***/ "./apps/quiz/src/dto/update-question.dto.ts":
 /*!**************************************************!*\
-  !*** ./apps/quiz/src/dto/create-quiz.request.ts ***!
+  !*** ./apps/quiz/src/dto/update-question.dto.ts ***!
   \**************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -19,16 +97,125 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CreateQuizRequest = void 0;
+exports.UpdateQuestionsDto = void 0;
 const class_validator_1 = __webpack_require__(/*! class-validator */ "class-validator");
-class CreateQuizRequest {
+const class_transformer_1 = __webpack_require__(/*! class-transformer */ "class-transformer");
+class QuestionDto {
 }
-exports.CreateQuizRequest = CreateQuizRequest;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateQuizRequest.prototype, "name", void 0);
+], QuestionDto.prototype, "type", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "question", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)({ each: true }),
+    __metadata("design:type", Array)
+], QuestionDto.prototype, "options", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "answer", void 0);
+class UpdateQuestionsDto {
+}
+exports.UpdateQuestionsDto = UpdateQuestionsDto;
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ValidateNested)({ each: true }),
+    (0, class_transformer_1.Type)(() => QuestionDto),
+    __metadata("design:type", Array)
+], UpdateQuestionsDto.prototype, "questions", void 0);
+
+
+/***/ }),
+
+/***/ "./apps/quiz/src/dto/update-quiz.dto.ts":
+/*!**********************************************!*\
+  !*** ./apps/quiz/src/dto/update-quiz.dto.ts ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var _a, _b;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UpdateQuizDto = void 0;
+const class_validator_1 = __webpack_require__(/*! class-validator */ "class-validator");
+const class_transformer_1 = __webpack_require__(/*! class-transformer */ "class-transformer");
+class QuestionDto {
+}
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "type", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "question", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], QuestionDto.prototype, "options", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], QuestionDto.prototype, "answer", void 0);
+class UpdateQuizDto {
+}
+exports.UpdateQuizDto = UpdateQuizDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateQuizDto.prototype, "subject", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateQuizDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], UpdateQuizDto.prototype, "duration", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateQuizDto.prototype, "creator_id", void 0);
+__decorate([
+    (0, class_validator_1.IsDateString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+], UpdateQuizDto.prototype, "start_time", void 0);
+__decorate([
+    (0, class_validator_1.IsDateString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+], UpdateQuizDto.prototype, "end_time", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ValidateNested)({ each: true }),
+    (0, class_transformer_1.Type)(() => QuestionDto),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], UpdateQuizDto.prototype, "questions", void 0);
 
 
 /***/ }),
@@ -52,21 +239,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b;
+var _a, _b, _c, _d, _e;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.QuizController = void 0;
 const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const quiz_service_1 = __webpack_require__(/*! ./quiz.service */ "./apps/quiz/src/quiz.service.ts");
-const create_quiz_request_1 = __webpack_require__(/*! ./dto/create-quiz.request */ "./apps/quiz/src/dto/create-quiz.request.ts");
+const create_quiz_dto_1 = __webpack_require__(/*! ./dto/create-quiz.dto */ "./apps/quiz/src/dto/create-quiz.dto.ts");
+const update_quiz_dto_1 = __webpack_require__(/*! ./dto/update-quiz.dto */ "./apps/quiz/src/dto/update-quiz.dto.ts");
+const update_question_dto_1 = __webpack_require__(/*! ./dto/update-question.dto */ "./apps/quiz/src/dto/update-question.dto.ts");
+const common_2 = __webpack_require__(/*! @app/common */ "./libs/common/src/index.ts");
 let QuizController = class QuizController {
-    constructor(quizService) {
+    constructor(quizService, rmqService) {
         this.quizService = quizService;
+        this.rmqService = rmqService;
     }
     async createQuiz(request) {
         return this.quizService.createQuiz(request);
     }
-    async getHello() {
+    async getQuizById(id) {
+        return this.quizService.getQuizById(id);
+    }
+    async getAllQuiz() {
         return this.quizService.showAll();
+    }
+    async deleteQuiz(id) {
+        return this.quizService.delete(id);
+    }
+    async updateQuiz(id, updateQuizDto) {
+        return this.quizService.updateQuiz(id, updateQuizDto);
+    }
+    async updateQuestions(id, updateQuestionsDto) {
+        return this.quizService.updateQuestions(id, updateQuestionsDto);
     }
 };
 exports.QuizController = QuizController;
@@ -74,18 +277,48 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof create_quiz_request_1.CreateQuizRequest !== "undefined" && create_quiz_request_1.CreateQuizRequest) === "function" ? _b : Object]),
+    __metadata("design:paramtypes", [typeof (_c = typeof create_quiz_dto_1.CreateQuizDto !== "undefined" && create_quiz_dto_1.CreateQuizDto) === "function" ? _c : Object]),
     __metadata("design:returntype", Promise)
 ], QuizController.prototype, "createQuiz", null);
+__decorate([
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], QuizController.prototype, "getQuizById", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], QuizController.prototype, "getHello", null);
+], QuizController.prototype, "getAllQuiz", null);
+__decorate([
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], QuizController.prototype, "deleteQuiz", null);
+__decorate([
+    (0, common_1.Patch)(":id"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, typeof (_d = typeof update_quiz_dto_1.UpdateQuizDto !== "undefined" && update_quiz_dto_1.UpdateQuizDto) === "function" ? _d : Object]),
+    __metadata("design:returntype", Promise)
+], QuizController.prototype, "updateQuiz", null);
+__decorate([
+    (0, common_1.Patch)(":id/questions"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, typeof (_e = typeof update_question_dto_1.UpdateQuestionsDto !== "undefined" && update_question_dto_1.UpdateQuestionsDto) === "function" ? _e : Object]),
+    __metadata("design:returntype", Promise)
+], QuizController.prototype, "updateQuestions", null);
 exports.QuizController = QuizController = __decorate([
-    (0, common_1.Controller)('quiz'),
-    __metadata("design:paramtypes", [typeof (_a = typeof quiz_service_1.QuizService !== "undefined" && quiz_service_1.QuizService) === "function" ? _a : Object])
+    (0, common_1.Controller)("quiz"),
+    __metadata("design:paramtypes", [typeof (_a = typeof quiz_service_1.QuizService !== "undefined" && quiz_service_1.QuizService) === "function" ? _a : Object, typeof (_b = typeof common_2.RmqService !== "undefined" && common_2.RmqService) === "function" ? _b : Object])
 ], QuizController);
 
 
@@ -126,13 +359,16 @@ exports.QuizModule = QuizModule = __decorate([
                 validationSchema: Joi.object({
                     MONGODB_URI: Joi.string().required(),
                     PORT: Joi.number().required(),
+                    RABBIT_MQ_URI: Joi.string().required(),
+                    RABBIT_MQ_QUIZ_QUEUE: Joi.string().required(),
                 }),
                 envFilePath: './apps/quiz/.env',
             }),
             common_2.DatabaseModule,
             mongoose_1.MongooseModule.forFeature([{
                     name: quiz_schema_1.Quiz.name, schema: quiz_schema_1.QuizSchema
-                }])
+                }]),
+            common_2.RmqModule
         ],
         controllers: [quiz_controller_1.QuizController,],
         providers: [quiz_service_1.QuizService, quiz_repository_1.QuizRepository],
@@ -203,14 +439,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var QuizService_1;
 var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.QuizService = void 0;
 const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const quiz_repository_1 = __webpack_require__(/*! ./quiz.repository */ "./apps/quiz/src/quiz.repository.ts");
-let QuizService = class QuizService {
+const mongoose_1 = __webpack_require__(/*! mongoose */ "mongoose");
+let QuizService = QuizService_1 = class QuizService {
     constructor(quizRepository) {
         this.quizRepository = quizRepository;
+        this.logger = new common_1.Logger(QuizService_1.name);
     }
     async createQuiz(request) {
         return this.quizRepository.create(request);
@@ -218,9 +457,38 @@ let QuizService = class QuizService {
     async showAll() {
         return this.quizRepository.find({});
     }
+    async getQuizById(id) {
+        const quiz = await this.quizRepository.findOne({ _id: new mongoose_1.Types.ObjectId(id) });
+        if (!quiz) {
+            throw new common_1.NotFoundException(`Quiz with ID ${id} not found`);
+        }
+        return quiz;
+    }
+    async delete(id) {
+        await this.quizRepository.deleteById(id);
+        return { deleted: true };
+    }
+    async updateQuiz(id, updateQuizDto) {
+        const filterQuery = { _id: new mongoose_1.Types.ObjectId(id) };
+        const updateQuery = { $set: updateQuizDto };
+        const quiz = await this.quizRepository.findOneAndUpdate(filterQuery, updateQuery);
+        if (!quiz) {
+            throw new common_1.NotFoundException(`Quiz with ID ${id} not found`);
+        }
+        return quiz;
+    }
+    async updateQuestions(id, updateQuestionsDto) {
+        const filterQuery = { _id: new mongoose_1.Types.ObjectId(id) };
+        const updateQuery = { $set: { questions: updateQuestionsDto.questions } };
+        const quiz = await this.quizRepository.findOneAndUpdate(filterQuery, updateQuery);
+        if (!quiz) {
+            throw new common_1.NotFoundException(`Quiz with ID ${id} not found`);
+        }
+        return quiz;
+    }
 };
 exports.QuizService = QuizService;
-exports.QuizService = QuizService = __decorate([
+exports.QuizService = QuizService = QuizService_1 = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [typeof (_a = typeof quiz_repository_1.QuizRepository !== "undefined" && quiz_repository_1.QuizRepository) === "function" ? _a : Object])
 ], QuizService);
@@ -244,25 +512,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a, _b;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.QuizSchema = exports.Quiz = void 0;
 const common_1 = __webpack_require__(/*! @app/common */ "./libs/common/src/index.ts");
 const mongoose_1 = __webpack_require__(/*! @nestjs/mongoose */ "@nestjs/mongoose");
+class Question {
+}
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Question.prototype, "type", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Question.prototype, "question", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Array)
+], Question.prototype, "options", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Question.prototype, "answer", void 0);
 let Quiz = class Quiz extends common_1.AbstractDocument {
 };
 exports.Quiz = Quiz;
 __decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", String)
-], Quiz.prototype, "name", void 0);
-__decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Quiz.prototype, "subject", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Quiz.prototype, "creator", void 0);
+], Quiz.prototype, "name", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
+], Quiz.prototype, "duration", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Quiz.prototype, "creator_id", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+], Quiz.prototype, "start_time", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+], Quiz.prototype, "end_time", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [Question], required: true }),
+    __metadata("design:type", Array)
+], Quiz.prototype, "questions", void 0);
 exports.Quiz = Quiz = __decorate([
     (0, mongoose_1.Schema)({ versionKey: false })
 ], Quiz);
@@ -322,6 +625,17 @@ class AbstractRepository {
     }
     async find(filterQuery) {
         return this.model.find(filterQuery, {}, { lean: true });
+    }
+    async deleteById(id) {
+        const result = await this.model.deleteOne({ _id: id }).exec();
+        if (result.deletedCount === 0) {
+            this.logger.warn(`Document not found with id:`, id);
+            throw new common_1.NotFoundException('Document not found.');
+        }
+        return true;
+    }
+    async deleteAll() {
+        return this.model.deleteMany({}).exec();
     }
     async startTransaction() {
         const session = await this.connection.startSession();
@@ -431,6 +745,114 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__webpack_require__(/*! ./database/database.module */ "./libs/common/src/database/database.module.ts"), exports);
 __exportStar(__webpack_require__(/*! ./database/abstract.repository */ "./libs/common/src/database/abstract.repository.ts"), exports);
 __exportStar(__webpack_require__(/*! ./database/abstract.schema */ "./libs/common/src/database/abstract.schema.ts"), exports);
+__exportStar(__webpack_require__(/*! ./rmq/rmq.service */ "./libs/common/src/rmq/rmq.service.ts"), exports);
+__exportStar(__webpack_require__(/*! ./rmq/rmq.module */ "./libs/common/src/rmq/rmq.module.ts"), exports);
+
+
+/***/ }),
+
+/***/ "./libs/common/src/rmq/rmq.module.ts":
+/*!*******************************************!*\
+  !*** ./libs/common/src/rmq/rmq.module.ts ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var RmqModule_1;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RmqModule = void 0;
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const rmq_service_1 = __webpack_require__(/*! ./rmq.service */ "./libs/common/src/rmq/rmq.service.ts");
+const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
+let RmqModule = RmqModule_1 = class RmqModule {
+    static register({ name }) {
+        return {
+            module: RmqModule_1,
+            imports: [
+                microservices_1.ClientsModule.registerAsync([
+                    {
+                        name,
+                        useFactory: (configService) => ({
+                            transport: microservices_1.Transport.RMQ,
+                            options: {
+                                urls: [configService.get("RABBIT_MQ_URI")],
+                                queue: configService.get(`RABBIT_MQ_${name}_QUEUE`),
+                            },
+                        }),
+                        inject: [config_1.ConfigService],
+                    },
+                ]),
+            ],
+            exports: [microservices_1.ClientsModule],
+        };
+    }
+};
+exports.RmqModule = RmqModule;
+exports.RmqModule = RmqModule = RmqModule_1 = __decorate([
+    (0, common_1.Module)({
+        providers: [rmq_service_1.RmqService],
+        exports: [rmq_service_1.RmqService],
+    })
+], RmqModule);
+
+
+/***/ }),
+
+/***/ "./libs/common/src/rmq/rmq.service.ts":
+/*!********************************************!*\
+  !*** ./libs/common/src/rmq/rmq.service.ts ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RmqService = void 0;
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
+const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+let RmqService = class RmqService {
+    constructor(configService) {
+        this.configService = configService;
+    }
+    getOptions(queue, noAck = false) {
+        return {
+            transport: microservices_1.Transport.RMQ,
+            options: {
+                urls: [this.configService.get("RABBIT_MQ_URI")],
+                queue: this.configService.get(`RABBIT_MQ_${queue}_QUEUE`),
+                noAck,
+                persistent: true,
+            },
+        };
+    }
+    ack(context) {
+        const channel = context.getChannelRef();
+        const originalMessage = context.getMessage();
+        channel.ack(originalMessage);
+    }
+};
+exports.RmqService = RmqService;
+exports.RmqService = RmqService = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [typeof (_a = typeof config_1.ConfigService !== "undefined" && config_1.ConfigService) === "function" ? _a : Object])
+], RmqService);
 
 
 /***/ }),
@@ -465,6 +887,16 @@ module.exports = require("@nestjs/core");
 
 /***/ }),
 
+/***/ "@nestjs/microservices":
+/*!****************************************!*\
+  !*** external "@nestjs/microservices" ***!
+  \****************************************/
+/***/ ((module) => {
+
+module.exports = require("@nestjs/microservices");
+
+/***/ }),
+
 /***/ "@nestjs/mongoose":
 /*!***********************************!*\
   !*** external "@nestjs/mongoose" ***!
@@ -472,6 +904,16 @@ module.exports = require("@nestjs/core");
 /***/ ((module) => {
 
 module.exports = require("@nestjs/mongoose");
+
+/***/ }),
+
+/***/ "class-transformer":
+/*!************************************!*\
+  !*** external "class-transformer" ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = require("class-transformer");
 
 /***/ }),
 
@@ -545,10 +987,14 @@ const core_1 = __webpack_require__(/*! @nestjs/core */ "@nestjs/core");
 const quiz_module_1 = __webpack_require__(/*! ./quiz.module */ "./apps/quiz/src/quiz.module.ts");
 const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
+const common_2 = __webpack_require__(/*! @app/common */ "./libs/common/src/index.ts");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(quiz_module_1.QuizModule);
+    const rmqService = app.get(common_2.RmqService);
+    app.connectMicroservice(rmqService.getOptions('QUIZ', true));
     app.useGlobalPipes(new common_1.ValidationPipe());
     const configService = app.get(config_1.ConfigService);
+    await app.startAllMicroservices();
     await app.listen(configService.get('PORT'));
 }
 bootstrap();

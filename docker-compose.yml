@@ -15,7 +15,26 @@ services:
     ports:
       - '3000:3000'
 
+  grading:
+    build:
+      context: .
+      dockerfile: ./apps/grading/Dockerfile
+      target: development
+    command: npm run start:dev grading
+    env_file:
+      - ./apps/grading/.env
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3001:3001'
 
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - '5672:5672'
 
   mongodb:
     image: mongo:5
