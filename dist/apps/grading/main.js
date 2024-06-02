@@ -90,6 +90,7 @@ exports.GradingController = void 0;
 const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const grading_service_1 = __webpack_require__(/*! ./grading.service */ "./apps/grading/src/grading.service.ts");
 const create_grading_dto_1 = __webpack_require__(/*! ./dto/create-grading.dto */ "./apps/grading/src/dto/create-grading.dto.ts");
+const common_2 = __webpack_require__(/*! @app/common */ "./libs/common/src/index.ts");
 let GradingController = class GradingController {
     constructor(gradingService) {
         this.gradingService = gradingService;
@@ -116,12 +117,14 @@ let GradingController = class GradingController {
 exports.GradingController = GradingController;
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], GradingController.prototype, "getAllData", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [typeof (_b = typeof create_grading_dto_1.CreateGradingDto !== "undefined" && create_grading_dto_1.CreateGradingDto) === "function" ? _b : Object]),
@@ -129,6 +132,7 @@ __decorate([
 ], GradingController.prototype, "createGrading", null);
 __decorate([
     (0, common_1.Get)('quiz/:quiz_id'),
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     __param(0, (0, common_1.Param)('quiz_id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -136,6 +140,7 @@ __decorate([
 ], GradingController.prototype, "getGradingByQuizId", null);
 __decorate([
     (0, common_1.Get)('user/:user_id'),
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     __param(0, (0, common_1.Param)('user_id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -143,6 +148,7 @@ __decorate([
 ], GradingController.prototype, "getGradingByUserId", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -150,6 +156,7 @@ __decorate([
 ], GradingController.prototype, "deleteGrading", null);
 __decorate([
     (0, common_1.Delete)(),
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -207,7 +214,8 @@ exports.GradingModule = GradingModule = __decorate([
                 }]),
             common_2.RmqModule.register({
                 name: services_1.QUIZ_SERVICE,
-            })
+            }),
+            common_2.AuthModule
         ],
         controllers: [grading_controller_1.GradingController],
         providers: [grading_service_1.GradingService, grading_repository_1.GradingRepository],
@@ -373,6 +381,130 @@ exports.Grading = Grading = __decorate([
     (0, mongoose_1.Schema)({ versionKey: false })
 ], Grading);
 exports.GradingSchema = mongoose_1.SchemaFactory.createForClass(Grading);
+
+
+/***/ }),
+
+/***/ "./libs/common/src/auth/auth.module.ts":
+/*!*********************************************!*\
+  !*** ./libs/common/src/auth/auth.module.ts ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AuthModule = void 0;
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const cookieParser = __webpack_require__(/*! cookie-parser */ "cookie-parser");
+const services_1 = __webpack_require__(/*! ./services */ "./libs/common/src/auth/services.ts");
+const rmq_module_1 = __webpack_require__(/*! ../rmq/rmq.module */ "./libs/common/src/rmq/rmq.module.ts");
+let AuthModule = class AuthModule {
+    configure(consumer) {
+        consumer.apply(cookieParser()).forRoutes('*');
+    }
+};
+exports.AuthModule = AuthModule;
+exports.AuthModule = AuthModule = __decorate([
+    (0, common_1.Module)({
+        imports: [rmq_module_1.RmqModule.register({ name: services_1.AUTH_SERVICE })],
+        exports: [rmq_module_1.RmqModule],
+    })
+], AuthModule);
+
+
+/***/ }),
+
+/***/ "./libs/common/src/auth/jwt-auth.guard.ts":
+/*!************************************************!*\
+  !*** ./libs/common/src/auth/jwt-auth.guard.ts ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.JwtAuthGuard = void 0;
+const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "rxjs");
+const services_1 = __webpack_require__(/*! ./services */ "./libs/common/src/auth/services.ts");
+let JwtAuthGuard = class JwtAuthGuard {
+    constructor(authClient) {
+        this.authClient = authClient;
+    }
+    canActivate(context) {
+        const authentication = this.getAuthentication(context);
+        return this.authClient
+            .send('validate_user', {
+            Authentication: authentication,
+        })
+            .pipe((0, rxjs_1.tap)((res) => {
+            this.addUser(res, context);
+        }), (0, rxjs_1.catchError)(() => {
+            throw new common_1.UnauthorizedException();
+        }));
+    }
+    getAuthentication(context) {
+        let authentication;
+        if (context.getType() === 'rpc') {
+            authentication = context.switchToRpc().getData().Authentication;
+        }
+        else if (context.getType() === 'http') {
+            authentication = context.switchToHttp().getRequest()
+                .cookies?.Authentication;
+        }
+        if (!authentication) {
+            throw new common_1.UnauthorizedException('No value was provided for Authentication');
+        }
+        return authentication;
+    }
+    addUser(user, context) {
+        if (context.getType() === 'rpc') {
+            context.switchToRpc().getData().user = user;
+        }
+        else if (context.getType() === 'http') {
+            context.switchToHttp().getRequest().user = user;
+        }
+    }
+};
+exports.JwtAuthGuard = JwtAuthGuard;
+exports.JwtAuthGuard = JwtAuthGuard = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, common_1.Inject)(services_1.AUTH_SERVICE)),
+    __metadata("design:paramtypes", [typeof (_a = typeof microservices_1.ClientProxy !== "undefined" && microservices_1.ClientProxy) === "function" ? _a : Object])
+], JwtAuthGuard);
+
+
+/***/ }),
+
+/***/ "./libs/common/src/auth/services.ts":
+/*!******************************************!*\
+  !*** ./libs/common/src/auth/services.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AUTH_SERVICE = void 0;
+exports.AUTH_SERVICE = 'AUTH';
 
 
 /***/ }),
@@ -550,6 +682,8 @@ __exportStar(__webpack_require__(/*! ./database/abstract.repository */ "./libs/c
 __exportStar(__webpack_require__(/*! ./database/abstract.schema */ "./libs/common/src/database/abstract.schema.ts"), exports);
 __exportStar(__webpack_require__(/*! ./rmq/rmq.service */ "./libs/common/src/rmq/rmq.service.ts"), exports);
 __exportStar(__webpack_require__(/*! ./rmq/rmq.module */ "./libs/common/src/rmq/rmq.module.ts"), exports);
+__exportStar(__webpack_require__(/*! ./auth/auth.module */ "./libs/common/src/auth/auth.module.ts"), exports);
+__exportStar(__webpack_require__(/*! ./auth/jwt-auth.guard */ "./libs/common/src/auth/jwt-auth.guard.ts"), exports);
 
 
 /***/ }),
@@ -720,6 +854,16 @@ module.exports = require("class-validator");
 
 /***/ }),
 
+/***/ "cookie-parser":
+/*!********************************!*\
+  !*** external "cookie-parser" ***!
+  \********************************/
+/***/ ((module) => {
+
+module.exports = require("cookie-parser");
+
+/***/ }),
+
 /***/ "joi":
 /*!**********************!*\
   !*** external "joi" ***!
@@ -737,6 +881,16 @@ module.exports = require("joi");
 /***/ ((module) => {
 
 module.exports = require("mongoose");
+
+/***/ }),
+
+/***/ "rxjs":
+/*!***********************!*\
+  !*** external "rxjs" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("rxjs");
 
 /***/ })
 

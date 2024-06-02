@@ -9,6 +9,8 @@ services:
       - ./apps/quiz/.env
     depends_on:
       - mongodb
+      - rabbitmq
+      - auth
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -25,11 +27,30 @@ services:
       - ./apps/grading/.env
     depends_on:
       - mongodb
+      - rabbitmq
+      - auth
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '3001:3001'
+
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    depends_on:
+      - mongodb
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3002:3002'
 
   rabbitmq:
     image: rabbitmq

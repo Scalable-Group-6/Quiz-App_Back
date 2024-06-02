@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { GradingController } from "./grading.controller";
 import { GradingService } from "./grading.service";
-import { DatabaseModule, RmqModule } from "@app/common";
+import { AuthModule, DatabaseModule, RmqModule } from "@app/common";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
 import { QUIZ_SERVICE } from "./constants/services";
@@ -27,7 +27,8 @@ import { Grading, GradingSchema } from "./schemas/grading.schema";
     }]),
     RmqModule.register({
       name: QUIZ_SERVICE,
-    })
+    }),
+    AuthModule
   ],
   controllers: [GradingController],
   providers: [GradingService,GradingRepository],

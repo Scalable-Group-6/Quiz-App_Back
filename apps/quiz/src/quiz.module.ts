@@ -3,7 +3,7 @@ import { QuizController } from "./quiz.controller";
 import { QuizService } from "./quiz.service";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
-import { DatabaseModule, RmqModule } from "@app/common";
+import { AuthModule, DatabaseModule, RmqModule } from "@app/common";
 
 import { MongooseModule } from "@nestjs/mongoose";
 import { Quiz, QuizSchema } from "./schemas/quiz.schema";
@@ -27,7 +27,8 @@ import { GRADING_SERVICE } from "./constants/services";
     MongooseModule.forFeature([{
       name: Quiz.name, schema: QuizSchema
     }]),
-    RmqModule
+    RmqModule,
+    AuthModule
   ],
   controllers: [QuizController,],
   providers: [QuizService,QuizRepository],
