@@ -25,8 +25,8 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: mongodb
-    version: 0.6.6
-    repository: https://groundhog2k.github.io/helm-charts/
+    version: 15.6.1
+    repository: https://charts.bitnami.com/bitnami
 
   - name: rabbitmq
     version: 14.3.2
