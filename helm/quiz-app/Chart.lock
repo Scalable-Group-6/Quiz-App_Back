@@ -1,0 +1,9 @@
+dependencies:
+- name: mongodb
+  repository: https://groundhog2k.github.io/helm-charts/
+  version: 0.6.6
+- name: rabbitmq
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.3.2
+digest: sha256:e01416a8a14ed979a35df2de6e6c890563da71879ad866db26e2157eddf28584
+generated: "2024-06-03T20:22:18.862198+07:00"

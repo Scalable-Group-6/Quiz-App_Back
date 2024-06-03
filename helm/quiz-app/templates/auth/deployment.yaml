@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: ramadhanialqadri12/quiz-app.auth
+          ports:
+            - containerPort: 3002
+          env:
+            - name: PORT
+              value: "3002"
+            - name: RABBIT_MQ_QUIZ_QUEUE
+              value: quiz
+            - name: RABBIT_MQ_AUTH_QUEUE
+              value: auth
+            - name: JWT_SECRET
+              value: yJSDVpxKUQ1LSfrnrsLN6r6tmFd1i95I3zGXjpIryO8zoWg7fDmYEnyyCmtKFh2MFd4c7rFjN9wKsiwRXYKZ9BKJ5YHTByQi8Q4
+            - name: JWT_EXPIRATION
+              value: "3600"
+            - name: MONGODB_URI
+              value: mongodb://root:password123@quiz-app-mongodb:27017/?authMechanism=SCRAM-SHA-1&directConnection=true
+            - name: RABBIT_MQ_URI
+              value: amqp://user1:password123@quiz-app-rabbitmq:5672
