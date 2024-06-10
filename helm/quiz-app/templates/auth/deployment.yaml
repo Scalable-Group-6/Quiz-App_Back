@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: ramadhanialqadri12/quiz-app.auth
+          image: dwf19/quiz-app_auth
           ports:
             - containerPort: 3002
           env:
@@ -29,6 +29,6 @@ spec:
             - name: JWT_EXPIRATION
               value: "3600"
             - name: MONGODB_URI
-              value: mongodb://root:password123@quiz-app-mongodb-headless:27017/?authMechanism=SCRAM-SHA-1&directConnection=true
+              value: mongodb://root:password123@quiz-app-mongodb-headless:27017/
             - name: RABBIT_MQ_URI
               value: amqp://user1:password123@quiz-app-rabbitmq:5672

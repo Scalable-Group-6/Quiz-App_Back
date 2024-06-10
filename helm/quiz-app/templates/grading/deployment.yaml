@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: grading
-          image: ramadhanialqadri12/quiz-app.grading
+          image: dwf19/quiz-app_grading
           ports:
             - containerPort: 3001
           env:
@@ -25,6 +25,6 @@ spec:
             - name: RABBIT_MQ_AUTH_QUEUE
               value: auth
             - name: MONGODB_URI
-              value: mongodb://root:password123@quiz-app-mongodb-headless:27017/?authMechanism=SCRAM-SHA-1&directConnection=true
+              value: mongodb://root:password123@quiz-app-mongodb-headless:27017/
             - name: RABBIT_MQ_URI
               value: amqp://user1:password123@quiz-app-rabbitmq:5672
