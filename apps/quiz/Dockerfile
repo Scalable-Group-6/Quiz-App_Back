@@ -1,28 +1,22 @@
-FROM node:alpine As development
+# Gunakan base image Node.js yang mendukung multi-arch
+FROM node:14-alpine
 
-WORKDIR /usr/src/app
+# Buat direktori kerja
+WORKDIR /app
 
+# Salin file package.json dan package-lock.json
 COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Salin seluruh kode aplikasi
 COPY . .
 
+# Build aplikasi NestJS
 RUN npm run build
 
-FROM node:alpine as production
+# Ekspos port yang akan digunakan
+EXPOSE 3001
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install --only=production
-
-COPY . .
-
-COPY --from=development /usr/src/app/dist ./dist
-
-CMD ["node", "dist/apps/quiz/main"]
+CMD ["node", "dist/apps/quiz/main.js"]

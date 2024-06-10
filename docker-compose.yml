@@ -3,16 +3,13 @@ services:
     build:
       context: .
       dockerfile: ./apps/quiz/Dockerfile
-      target: development
-    command: npm run start:dev quiz
+    image: ramadhanialqadri12/quiz-app.quiz:latest
     env_file:
       - ./apps/quiz/.env
     depends_on:
       # - mongodb
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
       - rabbitmq
+      - mongodb
       - auth
     volumes:
       - .:/usr/src/app
@@ -24,15 +21,11 @@ services:
     build:
       context: .
       dockerfile: ./apps/grading/Dockerfile
-      target: development
-    command: npm run start:dev grading
+    image: ramadhanialqadri12/quiz-app.grading:latest
     env_file:
       - ./apps/grading/.env
     depends_on:
-      # - mongodb
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
       - auth
     volumes:
@@ -45,15 +38,11 @@ services:
     build:
       context: .
       dockerfile: ./apps/auth/Dockerfile
-      target: development
-    command: npm run start:dev auth
+    image: ramadhanialqadri12/quiz-app.auth:latest
     env_file:
       - ./apps/auth/.env
     depends_on:
-      # - mongodb
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     volumes:
       - .:/usr/src/app
@@ -65,80 +54,14 @@ services:
     image: rabbitmq
     ports:
       - '5672:5672'
-  mongodb-primary:
-    image: "bitnami/mongodb:4.4"
-    # platform: linux/amd64
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-    volumes:
-      - "./data:/bitnami"
-    ports:
-      - 27017:27017
+      - '15672:15672'
 
-  mongodb-secondary:
-    image: "bitnami/mongodb:4.4"
-    # platform: linux/amd64
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
-      - MONGODB_REPLICA_SET_MODE=secondary
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-    ports:
-      - 27027:27017
-
-  mongodb-arbiter:
-    image: "bitnami/mongodb:4.4"
-    # platform: linux/amd64
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
-      - MONGODB_REPLICA_SET_MODE=arbiter
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-    ports:
-      - 27037:27017
-  
   mongodb:
-    image: mongo:5
-    command: --replSet rs0
+    image: mongo:latest
     ports:
-      - '28017:27017'
-    environment:
-      - MONGO_INITDB_DATABASE=attachment-api-local-dev
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb
-    healthcheck:
-      # use 'mongo' instead of 'mongosh' if MongoDB version is lower than 5
-      test: mongosh --eval 'db.runCommand("ping").ok' localhost:27017/test --quiet
-      interval: 10s
-      timeout: 10s
-      retries: 5
-
-  mongo-init:
-    image: mongo:5
-    restart: 'no'
-    depends_on:
-      mongodb:
-        condition: service_healthy
-    command: >
-      mongo --host mongodb:27017 --eval
-      '
-      rs.initiate( {
-         _id : "rs0",
-         members: [
-            { _id: 0, host: "localhost:27017" }
-         ]
-      })
-      '
-
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
 
 volumes:
-  mongodb_master_data:
-    driver: local
+  mongo-data:

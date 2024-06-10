@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grading
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: grading
+  template:
+    metadata:
+      labels:
+        app: grading
+    spec:
+      containers:
+      - name: grading
+        image: ramadhanialqadri12/quiz-app.grading:latest
+        ports:
+        - containerPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grading
+spec:
+  selector:
+    app: grading
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3001
+  type: LoadBalancer
