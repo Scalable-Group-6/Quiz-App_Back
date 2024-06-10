@@ -1,5 +1,5 @@
 # Gunakan base image Node.js yang mendukung multi-arch
-FROM node:14-alpine
+FROM node:alpine
 
 # Buat direktori kerja
 WORKDIR /app
@@ -19,4 +19,4 @@ RUN npm run build
 # Ekspos port yang akan digunakan
 EXPOSE 3001
 
-CMD ["node", "dist/apps/grading/main.js"]
+CMD ["node", "dist/apps/grading/main"]

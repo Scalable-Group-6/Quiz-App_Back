@@ -1,5 +1,5 @@
 # Gunakan base image Node.js yang mendukung multi-arch
-FROM node:14-alpine
+FROM node:alpine
 
 # Buat direktori kerja
 WORKDIR /app
@@ -17,6 +17,6 @@ COPY . .
 RUN npm run build
 
 # Ekspos port yang akan digunakan
-EXPOSE 3001
+EXPOSE 3000
 
-CMD ["node", "dist/apps/quiz/main.js"]
+CMD ["node", "dist/apps/quiz/main"]

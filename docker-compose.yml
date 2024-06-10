@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/quiz/Dockerfile
-    image: ramadhanialqadri12/quiz-app.quiz:latest
+    image: dwf19/quiz-app_quiz:latest
     env_file:
       - ./apps/quiz/.env
     depends_on:
@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/grading/Dockerfile
-    image: ramadhanialqadri12/quiz-app.grading:latest
+    image: dwf19/quiz-app_quiz:latest
     env_file:
       - ./apps/grading/.env
     depends_on:
@@ -38,7 +38,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/auth/Dockerfile
-    image: ramadhanialqadri12/quiz-app.auth:latest
+    image: dwf19/quiz-app_quiz:latest
     env_file:
       - ./apps/auth/.env
     depends_on:

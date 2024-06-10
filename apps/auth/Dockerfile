@@ -1,5 +1,5 @@
 # Gunakan base image Node.js yang mendukung multi-arch
-FROM node:14-alpine
+FROM node:alpine
 
 # Buat direktori kerja
 WORKDIR /app
